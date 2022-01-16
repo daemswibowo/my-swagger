@@ -1,0 +1,6 @@
+http://localhost
+
+route /petstore/* {
+    uri strip_prefix /petstore
+    reverse_proxy petstoreSvc:4010
+}

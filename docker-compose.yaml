@@ -1,0 +1,28 @@
+version: "2.4"
+services:
+  caddy:
+    image: caddy
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - petstoreService # <- panggil petstoreService ke sini
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    ports:
+      - "4000:8080"
+    volumes:
+      - ./docs:/usr/share/nginx/html/docs
+    environment:
+      URLS: "[
+          {name: 'Tempat jualan binatang', url: 'docs/petstore.yaml'},
+        ]"
+
+  # prism services to mock
+  petstoreSvc:
+    image: stoplight/prism:4
+    volumes:
+      - ./docs/petstore.yaml:/tmp/docs/petstore.yaml
+    command: "mock -d -p 4010 --host 0.0.0.0 /tmp/docs/petstore.yaml"
