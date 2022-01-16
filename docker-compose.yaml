@@ -10,7 +10,7 @@ services:
       - petstoreService # <- panggil petstoreService ke sini
 
   swagger-ui:
-    image: swaggerapi/swagger-ui
+    image: swuegger-ui
     ports:
       - "4000:8080"
     volumes:
